@@ -1,22 +1,34 @@
-import { Link } from "react-router-dom"
-import useQuickIn from "../../hooks/useQuickIn"
-import useForm from "../../hooks/useForm"
-import { useSignUp } from "../../services/auth"
-import { SingUpContainer } from "./styled"
+import { useState } from "react";
+import apis from "../../services/apis";
+import { useNavigate } from "react-router-dom";
+
 import { AuthContainer, HeaderAuth, InputAuth, ButtonAuth, AuthLink } from "../LoginPage/styled"
 
 export default function SignUpPage() {
-  const { form, handleForm } = useForm({ name: "", email: "", password: "", confirmPassword: "" })
-  useQuickIn()
-  const signUp = useSignUp()
+  const [ form, setForm ] = useState({ username: "", email: "", password: "", profile_image: "" })
+  const navigate = useNavigate()
 
-  function submitForm(e) {
-    e.preventDefault()
-    if (form.password !== form.confirmPassword) return alert("As senhas não coincidem!")
-
-    delete form.confirmPassword
-    signUp(form)
+  function handleForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
+
+  function register(e) {
+    e.preventDefault()
+
+    const promise = apis.signUp(form)
+    promise.then(res => {
+      console.log(res)
+      navigate("/")
+    });
+    promise.catch(err => {
+
+      alert(err.response.data);
+
+    })
+
+  }
+
+  
 
   return (
     <AuthContainer>
@@ -27,7 +39,7 @@ export default function SignUpPage() {
           the best links on the web
         </h3>
       </HeaderAuth>
-      <form onSubmit={submitForm}>
+      <form onSubmit={register}>
         
         <InputAuth
           required
@@ -52,20 +64,18 @@ export default function SignUpPage() {
           required
           placeholder="username"
           name="username"
-          value={form.name}
+          value={form.username}
           onChange={handleForm}
         />
         <InputAuth
           required
           minLength={3}
-          type="password"
-          autoComplete="new-password"
           placeholder="picture url"
-          name="picture"
-          value={form.confirmPassword}
+          name="profile_image"
+          value={form.profile_image}
           onChange={handleForm}
         />
-        <ButtonAuth type="submit">Cadastrar</ButtonAuth>
+        <ButtonAuth type="submit">Sign Up</ButtonAuth>
       </form>
 
       <AuthLink to="/">

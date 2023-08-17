@@ -1,19 +1,34 @@
-
-import useQuickIn from "../../hooks/useQuickIn"
 import useForm from "../../hooks/useForm"
-import { useLogin } from "../../services/auth"
+import useAuth from "../../hooks/useAuth"
 import { AuthContainer, HeaderAuth, InputAuth, ButtonAuth, AuthLink } from "./styled"
+import apis from "../../services/apis"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
 
 
 export default function LoginPage() {
-  const { form, handleForm } = useForm({ email: "", password: "" })
-  const login = useLogin()
-  useQuickIn()
+  const [form, setForm] = useState({ email: "", password: "" }); // Usando a tupla completa
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
-  function submitForm(e) {
-    e.preventDefault()
-    login(form)
+  function handleForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
+
+  function loginUser(e) {
+    e.preventDefault()
+
+    apis.singIn({ ...form })
+      .then(res => {
+        login(res.data)
+        navigate('/home')
+      })
+      .catch(() => {
+        alert('Erro, tente novamente');
+      })
+  }
+
+
 
   return (
     <AuthContainer>
@@ -24,7 +39,7 @@ export default function LoginPage() {
           the best links on the web
         </h3>
       </HeaderAuth>
-      <form onSubmit={submitForm}>
+      <form onSubmit={loginUser}>
         <InputAuth
           required
           type="email"
@@ -48,7 +63,7 @@ export default function LoginPage() {
       </form>
 
       <AuthLink to="/cadastro">
-      First time? Create an account!
+        First time? Create an account!
       </AuthLink>
     </AuthContainer>
   )

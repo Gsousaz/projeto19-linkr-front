@@ -10,19 +10,13 @@ export const PagesContainer = styled.main`
 `
 
 export const AuthContainer = styled.section`
-  min-height: calc(100vh - 100px); /* Altura total menos a altura do cabeçalho */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   max-width: 100vw;
-  margin-top: 100px; /* Altura do cabeçalho */
   background-color: ${mainColor};
+  min-height: 100vh;
 `;
 
 export const HeaderAuth = styled.div`
-  position: fixed;
-  top: 0;
   text-align: center;
   width: 100%;
   height: 175px;

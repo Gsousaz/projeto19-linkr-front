@@ -2,12 +2,19 @@ import { createGlobalStyle } from "styled-components";
 import { mainColor } from "../constants/colors";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
     * {
         font-family: Oswald, sans-serif; 
         font-style: normal;
         font-weight: 400;
     }
+
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
 
     h1 {
         font-weight: 700;
