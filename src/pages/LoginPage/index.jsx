@@ -21,7 +21,7 @@ export default function LoginPage() {
     apis.singIn({ ...form })
       .then(res => {
         login(res.data)
-        navigate('/home')
+        navigate('/timeline')
       })
       .catch(() => {
         alert('Erro, tente novamente');
@@ -62,7 +62,7 @@ export default function LoginPage() {
         <ButtonAuth type="submit">Log In</ButtonAuth>
       </form>
 
-      <AuthLink to="/cadastro">
+      <AuthLink to="/sign-up">
         First time? Create an account!
       </AuthLink>
     </AuthContainer>
