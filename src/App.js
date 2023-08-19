@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import styled from "styled-components"
-import HomePage from "./pages/HomePage/HomePage"
+import Timeline from "./pages/TimelinePage/Timeline"
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
 import { AuthContextProvider } from "./contexts/AuthContext"
@@ -13,8 +12,8 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route path="/cadastro" element={<SignUpPage />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/timeline" element={<Timeline />} />
 
           </Routes>
         </BrowserRouter>
